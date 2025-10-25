@@ -1,6 +1,10 @@
-# CPU Scheduler - Gantt Chart (React)
+# Shared Lab Server CPU Time Simulation
 
-This is a small React + Vite project that recreates the CPU scheduler Gantt chart UI (FCFS) from http://cpuburst.com/ganttcharts.html
+This is a small React + Vite project that simulates a laboratory server running multiple VMs and containerized workloads with a mix of interactive (short) and batch (long) tasks. 
+
+- Compare MLFQ, Preemptive Priority, and Round Robin CPU scheduler algorithms
+- Visualize gantt chart of CPU time slices, and response time vs quantum plot
+- Measure average response times of processes, throughput, CPU utilization, and number of context switches
 
 Quick start
 
@@ -18,7 +22,3 @@ npm run dev
 
 The app will open on the port that Vite chooses (usually http://localhost:5173).
 
-Notes
-
-- This is a minimal recreation of the FCFS Gantt chart with editable processes and context switch time.
-- Feel free to ask for additions (other scheduling algorithms, improved visuals, export, etc.).
