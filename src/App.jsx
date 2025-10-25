@@ -74,20 +74,34 @@ export default function App() {
         </section>
 
         <div className="space-y-6">
-          <div>
+          <section>
+            <h2 style={{ color: '#e6eef8', margin: '0 0 8px' }}>Gantt Chart</h2>
             <GanttChart schedule={schedule} processes={processes} />
-          </div>
+          </section>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <MetricsPanel schedule={schedule} processes={processes} contextSwitch={contextSwitch} />
-            {algorithm === 'Round Robin' && (
-              <ResponsePlot processes={processes} contextSwitch={contextSwitch} maxQuantum={8} />
+            <section>
+              <h2 style={{ color: '#e6eef8', margin: '0 0 8px' }}>Metrics</h2>
+              <MetricsPanel schedule={schedule} processes={processes} contextSwitch={contextSwitch} />
+            </section>
+
+            {algorithm === 'Round Robin' ? (
+              <section>
+                <h2 style={{ color: '#e6eef8', margin: '0 0 8px' }}>Response Time vs Quantum</h2>
+                <ResponsePlot processes={processes} contextSwitch={contextSwitch} maxQuantum={8} />
+              </section>
+            ) : (
+              <section>
+                <h2 style={{ color: '#e6eef8', margin: '0 0 8px' }}>Response Time vs Quantum</h2>
+                <div style={{ color: '#94a3b8', padding: 12, background: 'linear-gradient(180deg,#07102a,#061023)', borderRadius: 8 }}>This plot is available for Round Robin algorithm only.</div>
+              </section>
             )}
           </div>
 
-          <div className="mt-6">
+          <section className="mt-6">
+            <h2 style={{ color: '#e6eef8', margin: '0 0 8px' }}>Processes</h2>
             <ProcessTable processes={processes} setProcesses={setProcesses} />
-          </div>
+          </section>
         </div>
       </main>
 

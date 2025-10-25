@@ -78,7 +78,7 @@ export default function MetricsPanel({ schedule = [], processes = [], contextSwi
         <div className="text-2xl font-semibold text-white">{metrics.utilization}%</div>
       </div>
 
-  <div className="col-span-2 mt-2 text-sm text-slate-300">Context Switches: <span className="context-count">{metrics.contextSwitches}</span></div>
+  <div className="col-span-2 mt-2 mb-8 text-sm text-slate-300">Context Switches: <span className="context-count">{metrics.contextSwitches}</span></div>
     </div>
   )
 }

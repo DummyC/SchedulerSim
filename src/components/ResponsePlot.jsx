@@ -29,7 +29,7 @@ export default function ResponsePlot({ processes = [], contextSwitch = 0, maxQua
   }, [processes, contextSwitch, maxQuantum])
 
   return (
-    <div className="metric-card p-3 mt-4">
+    <div className="metric-card p-3">
       <div className="text-sm text-gray-400 mb-2">Avg Response vs Quantum (RR)</div>
       <div style={{ width: '100%', height: 220 }}>
         <ResponsiveContainer>
