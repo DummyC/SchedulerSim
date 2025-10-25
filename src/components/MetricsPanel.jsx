@@ -27,9 +27,14 @@ export default function MetricsPanel({ schedule = [], processes = [], contextSwi
     const avg = arr => arr.length ? arr.reduce((s, x) => s + x.response, 0) / arr.length : 0
 
     // utilization and throughput
-    const totalRun = sched.reduce((s, e) => s + (e.duration || 0), 0)
-    const busy = sched.filter(s => s.processId != null).reduce((s, e) => s + e.duration, 0)
-    const utilization = totalRun > 0 ? (busy / totalRun) * 100 : 0
+  const totalRun = sched.reduce((s, e) => s + (e.duration || 0), 0)
+  const busy = sched.filter(s => s.processId != null).reduce((s, e) => s + e.duration, 0)
+  const utilization = totalRun > 0 ? (busy / totalRun) * 100 : 0
+
+  // throughput = jobs completed per unit time (jobs / totalRun)
+  const completed = new Set(sched.filter(s => s.processId != null).map(s => s.processId))
+  const jobsCompleted = completed.size
+  const throughputJobsPerTime = totalRun > 0 ? (jobsCompleted / totalRun) : 0
 
     // count context switches by scanning transitions between scheduled entries
     let contextCount = 0
@@ -50,7 +55,7 @@ export default function MetricsPanel({ schedule = [], processes = [], contextSwi
     return {
       avgInteractive: avg(interactive),
       avgBatch: avg(batch),
-      throughput: processes.length > 0 ? (busy / (Math.max(1, totalRun))) : 0,
+      throughput: throughputJobsPerTime,
       utilization: utilization.toFixed(1),
       contextSwitches: contextCount
     }

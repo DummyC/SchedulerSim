@@ -1,5 +1,5 @@
 // Preemptive Priority scheduling
-export default function preemptivePriority(processes, { contextSwitch = 0 } = {}) {
+export default function preemptivePriority(processes, { contextSwitch = 0, quantum = 1 } = {}) {
   // lower priority value = higher priority
   const procs = processes.map(p => ({ ...p, remaining: p.burst }))
   const timeline = []
@@ -26,12 +26,25 @@ export default function preemptivePriority(processes, { contextSwitch = 0 } = {}
     // pick highest priority (lowest value), tie-break arrival then id
     ready.sort((a, b) => (a.priority || 0) - (b.priority || 0) || a.arrival - b.arrival || a.id - b.id)
     const cur = ready[0]
-    // run 1 unit and re-evaluate (preemptive)
-    const run = 1
-    timeline.push({ processId: cur.id, name: cur.name, start: time, duration: run })
-    time += run
-    cur.remaining -= run
-    enqueueArrivals()
+
+    // attempt to run up to `quantum` units, but preempt if a higher-priority process arrives
+    let ran = 0
+    while (ran < quantum && cur.remaining > 0) {
+      // run one time unit
+      timeline.push({ processId: cur.id, name: cur.name, start: time, duration: 1 })
+      time += 1
+      cur.remaining -= 1
+      ran += 1
+
+      // enqueue arrivals that arrived during this unit
+      enqueueArrivals()
+
+      // check for preemption: if any ready process has priority < cur.priority, preempt
+      const highest = [...ready].sort((a, b) => (a.priority || 0) - (b.priority || 0) || a.arrival - b.arrival || a.id - b.id)[0]
+      if (highest && highest !== cur && (highest.priority || 0) < (cur.priority || 0)) {
+        break
+      }
+    }
 
     // remove finished
     if (cur.remaining <= 0) {

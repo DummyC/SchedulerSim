@@ -36,10 +36,15 @@ function summarize(schedule, processes) {
     if (cur !== last) { contextCount += 1; last = cur }
   }
 
+  // compute completed jobs: processes that have remaining <= 0 in schedule
+  // to determine completions, we can examine when remaining reaches zero; simpler: sum unique processes that appear fully
+  const completed = new Set(sched.filter(s => s.processId != null).map(s => s.processId))
+  const jobsCompleted = completed.size
+
   return {
     avgInteractive: avg(interactive),
     avgBatch: avg(batch),
-    throughput: processes.length > 0 ? (busy / Math.max(1, totalRun)) : 0,
+    throughput: totalRun > 0 ? (jobsCompleted / totalRun) : 0,
     utilization: utilization,
     contextSwitches: contextCount
   }
