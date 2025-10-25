@@ -46,6 +46,16 @@ select:focus, input:focus { outline: 2px solid rgba(96,165,250,0.16); }
 
 .context-count { display:inline-block; background: linear-gradient(90deg,#0f172a,#0b1220); padding:6px 10px; border-radius:8px; border: 1px solid rgba(255,255,255,0.04); color: #fff; font-weight:600 }
 
+/* Buttons */
+.btn { padding: 8px 12px; border-radius: 8px; border: none; cursor: pointer; font-weight:600 }
+.btn-primary { background: linear-gradient(90deg,#2563eb,#1e40af); color: white; box-shadow: 0 6px 16px rgba(37,99,235,0.12) }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(37,99,235,0.16) }
+.btn-secondary { background: linear-gradient(90deg,#0b1220,#111827); color: #e6eef8; border: 1px solid rgba(255,255,255,0.04) }
+.btn-secondary:hover { transform: translateY(-1px) }
+
+/* spacing between action buttons */
+.table-actions .btn + .btn { margin-left: 10px; }
+
 /* Recharts tooltip styling (ResponsePlot) */
 .recharts-tooltip-wrapper { pointer-events: none; }
 .recharts-tooltip-inner {

@@ -14,6 +14,15 @@ export default function ProcessTable({ processes, setProcesses }) {
 
   const remove = id => setProcesses(procs => procs.filter(p => p.id !== id))
 
+  const randomizeAll = () => {
+    setProcesses(procs => procs.map(p => ({
+      ...p,
+      arrival: Math.floor(Math.random() * 10),
+      burst: Math.max(1, Math.floor(Math.random() * 6)),
+      priority: Math.max(1, Math.floor(Math.random() * 5))
+    })))
+  }
+
   return (
     <div className="process-table">
       <div className="table-header">
@@ -34,7 +43,8 @@ export default function ProcessTable({ processes, setProcesses }) {
       ))}
 
       <div className="table-actions">
-        <button onClick={add}>Add Process</button>
+        <button className="btn btn-primary" onClick={add}>Add Process</button>
+        <button className="btn btn-secondary" onClick={randomizeAll}>Randomize</button>
       </div>
     </div>
   )
